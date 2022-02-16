@@ -46,3 +46,7 @@ export declare type PrimaryLanguage = {
   name: string;
   id: string;
 };
+
+export declare type queryBody = {
+  query: string;
+};
