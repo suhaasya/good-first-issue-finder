@@ -38,6 +38,7 @@
 <script lang="ts">
   import IssueCard from '$lib/components/issue-card.svelte';
   import Search from '$lib/components/search.svelte';
+  import Toggle from '$lib/components/toggle.svelte';
   import Filter from '$lib/components/filter.svelte';
   import { selectedLabels } from '$lib/stores/selected-labels.store';
   import type { queryBody, SearchResponse } from '../global';
@@ -48,7 +49,7 @@
   $: filteredLabels = data.edges;
   $: searchItems = data.edges;
 
-  export let checked = false;
+  export let checked: boolean;
 
   $: $selectedLabels, filterLabels();
   const filterLabels = () => {
@@ -79,6 +80,17 @@
 </script>
 
 <div class="mb-8 flex flex-col items-center justify-center">
+  <div class="mb-4">
+    <Toggle
+      labelLeft="Organization"
+      on:change={() => {
+        console.log(checked);
+      }}
+      bind:checked
+      labelRight="Global"
+      id="org-toggle"
+    />
+  </div>
   <Search bind:searchTerm={searchString} on:keyup={() => performSearch()} />
   <Filter tags={data.labels} />
 </div>
@@ -91,10 +103,3 @@
 {:else}
   <div class="text-center">Unfortuately there was no issue found</div>
 {/if}
-<input
-  type="checkbox"
-  bind:checked
-  on:change={() => {
-    onChangeHandler();
-  }}
-/>
