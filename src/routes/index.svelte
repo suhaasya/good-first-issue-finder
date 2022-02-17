@@ -84,7 +84,7 @@
     <Toggle
       labelLeft="Organization"
       on:change={() => {
-        console.log(checked);
+        onChangeHandler();
       }}
       bind:checked
       labelRight="Global"
