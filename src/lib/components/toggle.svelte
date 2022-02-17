@@ -13,7 +13,7 @@
     class=" cursor-pointer rounded-full px-2 font-semibold transition-all duration-200"
     for={id}>{@html labelLeft}</label
   >
-  <div><input on:change {id} bind:checked type="checkbox" class="hidden" /></div>
+  <div><input type="checkbox" bind:checked on:change {id} class="hidden" /></div>
   <label
     class:inversed={checked}
     class="inversed cursor-pointer rounded-full px-2 font-semibold transition-all duration-200"

@@ -1,9 +1,10 @@
 <script lang="ts" context="module">
   import type { Load } from '@sveltejs/kit';
 
+  const globalQuery = 'is:open label:"EddieHub:good-first-issue" no:assignee';
+  const orgQuery = 'is:open label:"good first issue" org:EddieHubCommunity no:assignee';
+
   export const load: Load = async ({ fetch, url }) => {
-    const globalQuery = 'is:open label:"EddieHub:good-first-issue" no:assignee';
-    const orgQuery = 'is:open label:"good first issue" org:EddieHubCommunity no:assignee';
     let globalParam = false;
     try {
       globalParam = JSON.parse(url.searchParams.get('global'));
@@ -28,9 +29,9 @@
         },
       };
     }
-    const data = await res.json();
     return {
-      error: data.message,
+      status: res.status,
+      error: new Error(`Could not load issues`),
     };
   };
 </script>
@@ -80,18 +81,19 @@
 </script>
 
 <div class="mb-8 flex flex-col items-center justify-center">
-  <div class="mb-4">
-    <Toggle
-      labelLeft="Organization"
-      on:change={() => {
-        onChangeHandler();
-      }}
-      bind:checked
-      labelRight="Global"
-      id="org-toggle"
-    />
+  <div class="mb-4 flex items-center justify-center space-x-8">
+    <div>
+      <Toggle
+        id="toggle"
+        labelLeft="Organization"
+        labelRight="Global"
+        on:change={onChangeHandler}
+        bind:checked
+      />
+    </div>
+
+    <Search bind:searchTerm={searchString} on:keyup={() => performSearch()} />
   </div>
-  <Search bind:searchTerm={searchString} on:keyup={() => performSearch()} />
   <Filter tags={data.labels} />
 </div>
 {#if intersectedArray.length > 0}
