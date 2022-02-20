@@ -11,12 +11,8 @@
     } catch (e) {
       globalParam = false;
     }
-    let postBody: queryBody = null;
 
-    if (!globalParam) postBody = { query: orgQuery };
-    else {
-      postBody = { query: globalQuery };
-    }
+    const postBody: queryBody = globalParam ? { query: globalQuery } : { query: orgQuery };
 
     const res = await fetch('/api/get-issues', { method: 'POST', body: JSON.stringify(postBody) });
 
