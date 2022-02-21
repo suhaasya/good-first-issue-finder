@@ -77,19 +77,17 @@
 </script>
 
 <div class="mb-8 flex flex-col items-center justify-center">
-  <div class="mb-4 flex items-center justify-center space-x-8">
-    <div>
-      <Toggle
-        id="toggle"
-        labelLeft="Organization"
-        labelRight="Global"
-        on:change={onChangeHandler}
-        bind:checked
-      />
-    </div>
-
-    <Search bind:searchTerm={searchString} on:keyup={() => performSearch()} />
+  <div class="mb-4">
+    <Toggle
+      id="toggle"
+      labelLeft="Organization"
+      labelRight="Global"
+      on:change={onChangeHandler}
+      bind:checked
+    />
   </div>
+  <Search bind:searchTerm={searchString} on:keyup={() => performSearch()} />
+
   <Filter tags={data.labels} />
 </div>
 {#if intersectedArray.length > 0}
